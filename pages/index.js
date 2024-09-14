@@ -1,16 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
-
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'; // Importing React Icons
 
 const Hero8 = () => {
-  
   const images = [
     'banner1.jpg',
     'banner2.jpg',
     'banner3.jpg'
   ];
-
-
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -21,21 +17,60 @@ const Hero8 = () => {
 
     return () => clearInterval(interval);
   }, [images]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
  
 
   return (
     <div className='min-h-screen bg-white'>
-    <div className="relative   flex justify-end bg-gradient-to-t from-white via-transparent to-white overflow-hidden">
-    
-    <div className="relative w-full h-36 md:h-96">
+   <div className="relative flex justify-end bg-gradient-to-t from-white via-transparent to-white overflow-hidden">
+        {/* Image */}
+        <div className="relative w-full h-36 md:h-96">
           <img
             className="object-contain w-full h-full"
             src={images[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
           />
+
+          {/* Left Arrow */}
+          <button
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-md hover:bg-gray-200 transition"
+            onClick={handlePrev}
+          >
+            <FiArrowLeft className="w-6 h-6 text-gray-800" />
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-md hover:bg-gray-200 transition"
+            onClick={handleNext}
+          >
+            <FiArrowRight className="w-6 h-6 text-gray-800" />
+          </button>
+
+          {/* Dotted Indicators */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                className={`w-3 h-3 rounded-full ${currentIndex === idx ? 'bg-indigo-600' : 'bg-gray-300'} transition-colors`}
+                onClick={() => goToSlide(idx)}
+              ></button>
+            ))}
+          </div>
         </div>
-   
-  </div>
+      </div>
   <section className="bg-white dark:bg-gray-900">
         <div className="container px-6 py-10 mx-auto">
 

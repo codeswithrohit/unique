@@ -15,6 +15,7 @@ const Cart = () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     setCartItems(cart);
   }, []);
+  console.log("cart",cartItems)
 
   const handleRemove = (id) => {
     const updatedCart = cartItems.filter(item => item.id !== id);
@@ -71,28 +72,38 @@ const Cart = () => {
           {cartItems.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
-            <>
-              <ul>
-                {cartItems.map(item => (
-                  <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-mono">{item.title} ({item.category})</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {cartItems.map(item => (
+                <div key={item.id} className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-40 w-full object-contain mb-4 rounded-lg"
+                  />
+                  <div className="flex-1">
+                    <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
+                    <p className="text-gray-500 text-sm mb-4">{item.category}</p>
+                  </div>
+                  <div className="flex justify-between items-center">
                     <button
                       onClick={() => handleRemove(item.id)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-white p-2 rounded-md font-mono flex font-bold bg-red-500 hover:bg-red-700 transition duration-300"
                     >
-                      <FaTrash />
+                     Remove 
                     </button>
-                  </li>
-                ))}
-              </ul>
-              <button
-                type="button"
-                onClick={handleEnquireClick}
-                className="mt-4 inline-flex items-center font-mono rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <FaEnvelope className="mr-2" /> Enquire
-              </button>
-            </>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+           {cartItems.length > 0 && (
+            <button
+              type="button"
+              onClick={handleEnquireClick}
+              className="mt-8 inline-flex items-center rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <FaEnvelope className="mr-2" /> Enquire
+            </button>
           )}
         </div>
       </section>

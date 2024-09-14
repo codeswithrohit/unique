@@ -97,7 +97,7 @@ const Products = () => {
       toast.error("This item is already in the cart!");
     } else {
       // Add item to cart
-      cart.push({ id: product.id, title: product.title, category: product.productcategory });
+      cart.push({ id: product.id, title: product.title, category: product.productcategory,image:product.images[0] });
       localStorage.setItem('cart', JSON.stringify(cart));
       // Show success toast notification
       toast.success("Item added to cart successfully!");
